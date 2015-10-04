@@ -1,0 +1,33 @@
+{
+    "name": "reqponse",
+    "version": "0.0.1",
+    "description": "A small module to construct request-response objects, contained the most necessary data like headers, cookies, form fields and other...",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "request",
+        "response",
+        "server",
+        "handler",
+        "cookies",
+        "headers",
+        "form",
+        "get",
+        "post"
+    ],
+    "author": {
+        "name": "Stepan Zhevak",
+        "email": "enet@protonmail.ch",
+        "url": "http://zhevak.name"
+    },
+    "repository": "https://github.com/Enet/reqponse",
+    "license": "GPLv3",
+    "dependencies": {
+        "formidable": "*"
+    },
+    "engines": {
+        "node": ">=4.0.0"
+    }
+}
