@@ -27,7 +27,11 @@ class Reqponse {
     parse (callback, config) {
         let form = new formidable.IncomingForm(),
             cb = (error, fields, files) => {
-                this[this.method.toLowerCase()] = fields;
+                if (this.method === 'GET') {
+                    Object.assign(this.get, fields);
+                } else {
+                    this[this.method.toLowerCase()] = fields;
+                }
                 this.files = files;
                 callback(error);
             };
@@ -36,6 +40,7 @@ class Reqponse {
         Object.assign(form, config);
 
         try {
+            this.get = Utils.splitIntoPairs(this.url.parsed.query, '&');
             form.parse(this.request, cb);
         } catch(error) {
             callback(error);
@@ -68,6 +73,8 @@ class Reqponse {
     }
 
     send () {
+        let cookie = this.cookie.toHeader()['Set-Cookie'];
+        if (cookie.length) this.header.set('Set-Cookie', cookie);
         this.response.writeHead(+this.status || 500, this.header.toHeader());
         this.response.write(this._buffer);
         this.response.end();
@@ -108,8 +115,8 @@ class Cookie {
     set (key, value, timeout, path, domain) {
         this._response[key + ''] = {
             value: value,
-            timeout: timeout,
-            path: path,
+            timeout: timeout >= 0 ? timeout : null,
+            path: typeof path === 'string' ? path : '/',
             domain: domain
         };
         return this;
@@ -162,7 +169,7 @@ class Utils {
     }
 };
 
-const Colors = ['#FF0000', '#000080', '#FF4500', '#FF00FF', '#1E90FF', '#8A2BE2'];
+const Colors = ['#DD0011', '#F17217', '#DAA520', '#5BA51E', '#009C9F', '#1453FF', '#8A2BE2'];
 
 module.exports = {
     Colors: Colors,

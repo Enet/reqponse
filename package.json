@@ -1,6 +1,6 @@
 {
     "name": "reqponse",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "A small module to construct request-response objects, contained the most necessary data like headers, cookies, form fields and other...",
     "main": "index.js",
     "scripts": {
