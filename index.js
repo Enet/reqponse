@@ -15,8 +15,8 @@ class Reqponse {
         this.url = {};
         this.url.original = request.url;
         this.url.parsed = url.parse(this.url.original);
-        this.url.path = this.url.parsed.pathname;
-        this.url.splitted = this.url.path.substr(1).split('/');
+        this.url.pathname = this.url.parsed.pathname;
+        this.url.splitted = this.url.pathname.substr(1).split('/');
 
         this.header = new Header(request.headers);
         this.cookie = new Cookie(Utils.splitIntoPairs(request.headers.cookie, '; '));
@@ -45,6 +45,7 @@ class Reqponse {
         } catch(error) {
             callback(error);
         }
+        return this;
     }
 
     clear () {
@@ -104,7 +105,8 @@ class Header {
 
 class Cookie {
     constructor (cookies) {
-        this._request = Object.assign({}, cookies);
+        cookies = cookies || {};
+        this._request = cookies;
         this._response = {};
     }
 
@@ -112,12 +114,14 @@ class Cookie {
         return this._request[key + ''];
     }
 
-    set (key, value, timeout, path, domain) {
+    set (key, value, timeout, path, domain, secure, httponly) {
         this._response[key + ''] = {
             value: value,
-            timeout: timeout >= 0 ? timeout : null,
+            timeout: timeout >= 0 && timeout !== null ? timeout : null,
             path: typeof path === 'string' ? path : '/',
-            domain: domain
+            domain: domain,
+            Secure: !!secure,
+            HttpOnly: !!httponly
         };
         return this;
     }
@@ -141,6 +145,9 @@ class Cookie {
         for (let p of ['expires', 'path', 'domain']) {
             let property = cookie[p];
             if (property) result += '; ' + p + '=' + property;
+        }
+        for (let p of ['Secure', 'HttpOnly']) {
+            if (cookie[p]) result += '; ' + p;
         }
 
         return result;
