@@ -1,6 +1,7 @@
 'use strict';
 
 let url = require('url'),
+    qs = require('querystring'),
     util = require('util'),
     formidable = require('formidable');
 
@@ -17,6 +18,7 @@ class Reqponse {
         this.url.parsed = url.parse(this.url.original);
         this.url.pathname = this.url.parsed.pathname;
         this.url.splitted = this.url.pathname.substr(1).split('/');
+        this.url.params = qs.parse(this.url.parsed.query);
 
         this.header = new Header(request.headers);
         this.cookie = new Cookie(Utils.splitIntoPairs(request.headers.cookie, '; '));
@@ -172,7 +174,7 @@ class Utils {
             color = Colors[colorIndex],
             filler = '▓'.repeat(100);
 
-        return `<pre style="margin:0;color:${color}">\n${filler}\n${string}\n${filler}\n</pre>`;
+        return `<pre style="margin:0;font-family:monospace;font-size:12px;line-height:16px;color:${color}">\n${filler}\n${string}\n${filler}\n</pre>`;
     }
 };
 
