@@ -61,7 +61,7 @@ This property is an instance of Header class (read below).
 This property is an instance of Cookie class (read below).
 
 ### $.parse(callback, config)
-Parses form data and stores it in the reqponse object. Formidable module is used under the hood, `config` (optional) is passed into one. Callback gets only one parameter - occured error or null.
+Parses form data and stores it in the reqponse object. Formidable module is used under the hood, `config` (optional) is passed into one. Callback gets only one parameter - occurred error or null.
 
 **returns $**
 
@@ -81,7 +81,7 @@ This method adds to the buffer debugging information about each argument (`util.
 **returns $**
 
 ### $.error(error)
-This method adds to the buffer callstack of occured error. It is userful to catch errors in the browser.
+This method adds to the buffer callstack of occurred error. It is userful to catch errors in the browser.
 
 **returns $**
 
